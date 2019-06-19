@@ -1,0 +1,22 @@
+@model User
+
+<h1>Details for User #@Model.UserId</h1>
+<h3>@Model.FirstName @Model.LastName's Messages</h3>
+<hr>
+@foreach(var message in Model.MessagesCreated)
+{
+    <p>@message.Content</p>
+    <h2>Liked: @message.VotesRecieved.Count(m => m.IsUpvote) Times</h2>
+    <h2>Disliked: @message.VotesRecieved.Count(m => !m.IsUpvote) Times</h2>
+    @foreach(var vote in message.VotesRecieved)
+    {
+        if(vote.IsUpvote)
+        {
+            <p>@vote.Voter.FirstName liked this one!</p>
+        }
+        else
+        {
+            <p>@vote.Voter.FirstName dis-liked this one!</p>
+        }
+    }
+}

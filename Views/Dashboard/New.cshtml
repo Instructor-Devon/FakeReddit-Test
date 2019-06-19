@@ -1,0 +1,11 @@
+@model Message
+<h2>Write a Post!</h2>
+<form asp-action="Create" asp-controller="Dashboard" method="post">
+    <div class="form-group">
+        <span asp-validation-for="Content"></span>
+        <label asp-for="Content"></label>
+        <textarea asp-for="Content"></textarea>
+    </div>
+    <input type="hidden" asp-for="UserId" value="@ViewBag.UserId">
+    <button>Submit</button>
+</form>

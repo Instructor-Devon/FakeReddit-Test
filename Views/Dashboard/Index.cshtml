@@ -1,0 +1,31 @@
+@model List<Message>
+<h2>Messages</h2>
+<a asp-action="New">Create a post...</a>
+@foreach(var message in Model)
+{
+    <div class="message">
+        <p>@message.Content (posted by) <a asp-action="Show" asp-controller="Home" asp-route-userId="@message.UserId">@message.Creator.FirstName</a></p>
+        @{
+
+            if(message.VotesRecieved.Any(v => v.UserId == 3 && v.IsUpvote))
+            {
+                <a class="glyphicon glyphicon-arrow-down" asp-action="Vote" asp-route-isUpvote="@false" asp-route-messageId="@message.MessageId"></a>
+            }
+            else if(message.VotesRecieved.Any(v => v.UserId == 3 && !v.IsUpvote))
+            {
+                <a class="glyphicon glyphicon-arrow-up" asp-action="Vote" asp-route-isUpvote="@true" asp-route-messageId="@message.MessageId"></a>
+            }
+            else
+            {
+                <a class="glyphicon glyphicon-arrow-down" asp-action="Vote" asp-route-isUpvote="@false" asp-route-messageId="@message.MessageId"></a>
+                <a class="glyphicon glyphicon-arrow-up" asp-action="Vote" asp-route-isUpvote="@true" asp-route-messageId="@message.MessageId"></a>
+            }
+        }
+        <h1>KARMA: @message.KarmaScore</h1>
+
+        @if(message.UserId == 3)
+        {
+            <a href="#">Delete</a>
+        }
+    </div>
+}
